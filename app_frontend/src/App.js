@@ -1,9 +1,11 @@
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Navbar from "./Components/Navbar/Navbar";
 import LandingPage from "./Components/NavLinks/LandingPage";
 import { authContext } from "./Components/Context/AuthContext";
 import { useState } from "react";
+import Auth from "./Components/Auth/Auth";
+import Home from "./Components/NavLinks/Home";
 
 function App() {
   const [isLoggedIn, SetIsLoggedIn] = useState(false);
@@ -12,6 +14,7 @@ function App() {
     SetIsLoggedIn(true);
   };
   const logout = () => {
+    console.log("false");
     SetIsLoggedIn(false);
   };
   return (
@@ -23,6 +26,8 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<LandingPage />} />
+            <Route path="/user/auth" element={<Auth />} />
+            <Route path="/home" element={<Home />} />
           </Routes>
         </BrowserRouter>
       </authContext.Provider>

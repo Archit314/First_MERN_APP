@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { authContext } from "../Context/AuthContext";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
+  const auth = useContext(authContext)
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -21,17 +24,20 @@ export default function Navbar() {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="/">
+              {auth.isLoggedIn && <li className="nav-item">
+                <Link className="nav-link active" aria-current="page" to="/">
                   Home
-                </a>
-              </li>
+                </Link>
+              </li>}
               <li className="nav-item">
-                <a className="nav-link" href="/">
-                  Link
-                </a>
+                <Link className="nav-link" to="/">
+                  Menu
+                </Link>
               </li>
             </ul>
+            <Link type="button" className="btn btn-light" to={'user/auth'} onClick={auth.logout}>
+              {!auth.isLoggedIn? 'Authenticate': 'Logout'}
+            </Link>
           </div>
         </div>
       </nav>
