@@ -49,7 +49,7 @@ console.log(`open modal`);
               Authenticate
             </Link>}
             {auth.isLoggedIn && <Link type="button" className="btn btn-light" onClick={handleModal}>
-              Logout
+              Log-out
             </Link>}
           </div>
         </div>
