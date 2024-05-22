@@ -15,7 +15,7 @@ export default function Modal({ modalAction, onClose }) {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={onClose}></button>
                         </div>
                         <div className="modal-body">
-                            Are you sure you want to log out?
+                            Are you sure you want to log-out?
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={onClose}>Close</button>
