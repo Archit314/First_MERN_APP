@@ -1,9 +1,19 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { authContext } from "../Context/AuthContext";
 import { Link } from "react-router-dom";
+import Modal from "../Modal/Modal";
 
 export default function Navbar() {
   const auth = useContext(authContext)
+
+  const [showModal, SetShowModal] = useState(false)
+
+  const handleModal = () => {
+    if (auth.isLoggedIn) {
+console.log(`open modal`);
+      SetShowModal(true)
+    }
+  }
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -35,12 +45,18 @@ export default function Navbar() {
                 </Link>
               </li>
             </ul>
-            <Link type="button" className="btn btn-light" to={'user/auth'} onClick={auth.logout}>
-              {!auth.isLoggedIn? 'Authenticate': 'Logout'}
-            </Link>
+           {!auth.isLoggedIn && <Link type="button" className="btn btn-light" to={'user/auth'}>
+              Authenticate
+            </Link>}
+            {auth.isLoggedIn && <Link type="button" className="btn btn-light" onClick={handleModal}>
+              Logout
+            </Link>}
           </div>
         </div>
       </nav>
+      {/* {showModal && <Modal modalAction={showModal}/>} */}
+      {showModal && <Modal modalAction={auth.logout} onClose={() => SetShowModal(false)} />}
     </div>
+
   );
 }

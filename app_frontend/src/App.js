@@ -14,7 +14,6 @@ function App() {
     SetIsLoggedIn(true);
   };
   const logout = () => {
-    console.log("false");
     SetIsLoggedIn(false);
   };
   return (
