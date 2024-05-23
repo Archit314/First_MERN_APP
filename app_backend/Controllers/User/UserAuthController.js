@@ -1,15 +1,21 @@
 // Third party importing
 const HttpError = require("../../models/http-error");
+const { validationResult } = require("express-validator");
 
 // Below is the function to handle user sign-up
 const userSignUp = (req, res, next) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    const message = !email ? "Email is required" : "Password is required";
-
-    console.log(message);
-    return res.status(422).json({ message: message, status: 422 });
+  const validationError = validationResult(req);
+  if (!validationError.isEmpty()) {
+    console.log(validationError);
+    throw new HttpError("Invalid inputs, please check yout data", 422);
   }
+  const { email, password } = req.body;
+  //   if (!email || !password) {
+  //     const message = !email ? "Email is required" : "Password is required";
+
+  //     console.log(message);
+  //     return res.status(422).json({ message: message, status: 422 });
+  //   }
 
   console.log(`User sign-up API calls...........`);
   return res
