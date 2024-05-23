@@ -7,8 +7,6 @@ const { check } = require("express-validator");
 // const HttpError = require('../models/http-error')
 const UserAuthController = require("../Controllers/User/UserAuthController");
 
-console.log("reached");
-
 router.post(
   "/sign-up",
   [check("email").not().isEmpty(), check("password").not().isEmpty()],

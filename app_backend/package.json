@@ -19,6 +19,7 @@
     "express": "^4.19.2",
     "express-validator": "^7.1.0",
     "minimist": "^1.2.8",
+    "mongoose": "^8.4.0",
     "uuid": "^9.0.1"
   }
 }
