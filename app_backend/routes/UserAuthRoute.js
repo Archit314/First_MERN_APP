@@ -1,11 +1,15 @@
+// Third party imports
 const express = require('express')
 const router = express.Router()
 
+// Manual file imports
+// const HttpError = require('../models/http-error')
+const UserAuthController = require('../Controllers/User/UserAuthController')
+
 console.log('reached');
 
-router.get('/', (req, res, next) => {
-    console.log(`Get request in user auth route`);
-    res.json({message: 'It works'})
-})
+router.post('/sign-up', UserAuthController.userSignUp)
+
+router.get('/', UserAuthController.homeRoute)
 
 module.exports = router
