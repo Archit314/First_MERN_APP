@@ -15,6 +15,21 @@ const userSignUp = async (req, res, next) => {
   }
   const {name, mobileNumber, email, password } = req.body;
 
+  // Getting user exist with email or phone number
+  try{
+    const existUser = await UserModel.findOne({
+      $or: [{ mobileNumber: mobileNumber }, { email: email }]
+    })
+
+    if(existUser){
+      return res.status(422).json({status: 422, message: `User already exist, Sign-in with you secret credential.`, data: existUser.toObject({getters: true})}) // Setting getters to true will give new key in the API response object with name id whose value will be same as _id.
+    }
+  }catch(error){
+    const catchedError = new HttpError(`Failed to check user in our system.`, 500)
+    return next(catchedError)
+  }
+
+
   const createUser = new UserModel({
     name: name,
     mobileNumber: mobileNumber,
@@ -32,7 +47,7 @@ const userSignUp = async (req, res, next) => {
   console.log(`User sign-up API calls...........`);
   return res
     .status(200)
-    .json({ message: `User sign-up successfully`, status: 200, data: createUser });
+    .json({status: 200, message: `User sign-up successfully`, data: createUser });
 };
 
 // Practice route
