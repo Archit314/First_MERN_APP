@@ -2,25 +2,37 @@
 const HttpError = require("../../models/http-error");
 const { validationResult } = require("express-validator");
 
+// Manul file importing
+const UserModel = require('../../models/User/UserModel')
+
 // Below is the function to handle user sign-up
-const userSignUp = (req, res, next) => {
+const userSignUp = async (req, res, next) => {
   const validationError = validationResult(req);
   if (!validationError.isEmpty()) {
     console.log(validationError);
-    throw new HttpError("Invalid inputs, please check yout data", 422);
+    return next(new HttpError("Invalid inputs, please check yout data", 422)) // use with async await
+    throw new HttpError("Invalid inputs, please check yout data", 422); // use without async await
   }
-  const { email, password } = req.body;
-  //   if (!email || !password) {
-  //     const message = !email ? "Email is required" : "Password is required";
+  const {name, mobileNumber, email, password } = req.body;
 
-  //     console.log(message);
-  //     return res.status(422).json({ message: message, status: 422 });
-  //   }
+  const createUser = new UserModel({
+    name: name,
+    mobileNumber: mobileNumber,
+    email: email,
+    password: password
+  })
+  
+  try{
+    await createUser.save()
+  }catch(error){
+    const newError = new HttpError(`User sign-up failed.`, 500)
+    return next(newError)
+  }
 
   console.log(`User sign-up API calls...........`);
   return res
     .status(200)
-    .json({ message: `User sign-up successfully`, status: 200 });
+    .json({ message: `User sign-up successfully`, status: 200, data: createUser });
 };
 
 // Practice route

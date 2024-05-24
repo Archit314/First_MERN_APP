@@ -44,6 +44,11 @@ console.log(`open modal`);
                   Menu
                 </Link>
               </li>
+              {auth.isLoggedIn && <li className="nav-item">
+                <Link className="nav-link" to="/user/profile">
+                  Profile
+                </Link>
+              </li>}
             </ul>
            {!auth.isLoggedIn && <Link type="button" className="btn btn-light" to={'user/auth'}>
               Authenticate
