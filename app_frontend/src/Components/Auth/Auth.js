@@ -49,7 +49,7 @@ export default function Auth() {
     try {
       const response = await axios(config);
 
-      if (response.status !== 200) {
+      if (response.status === 200) {
         console.log(`User sign-up successfully`);
       } else {
         console.log(`User sign-up failed`);
