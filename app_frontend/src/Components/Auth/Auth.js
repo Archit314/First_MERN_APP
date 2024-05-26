@@ -28,35 +28,65 @@ export default function Auth() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const postData = {
-      email: data.email,
-      password: data.password,
-      name: data.name,
-      mobileNumber: data.mobileNumber,
-    };
+    if (isSignup) {
+      const postData = {
+        email: data.email,
+        password: data.password,
+      };
 
-    const config = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      url:
-        process.env.REACT_APP_PROD_API_BASE_URL + `/v1/api/auth/user/sign-up`,
-      data: postData,
-    };
-    console.log(config);
+      const config = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        url:
+          process.env.REACT_APP_PROD_API_BASE_URL + `/v1/api/auth/user/sign-in`,
+        data: postData,
+      };
 
-    try {
-      const response = await axios(config);
+      try {
+        const response = await axios(config);
 
-      if (response.status === 200) {
-        console.log(`User sign-up successfully`);
-      } else {
-        console.log(`User sign-up failed`);
+        if (response && response.status === 200) {
+          console.log(`User sign-in successfully`);
+          navigate("/home");
+        } else {
+          console.log(`User sign-in failed`);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {}
-    auth.login();
-    navigate("/home");
+    } else {
+      const postData = {
+        email: data.email,
+        password: data.password,
+        name: data.name,
+        mobileNumber: data.mobileNumber,
+      };
+
+      const config = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        url:
+          process.env.REACT_APP_PROD_API_BASE_URL + `/v1/api/auth/user/sign-up`,
+        data: postData,
+      };
+      console.log(config);
+
+      try {
+        const response = await axios(config);
+
+        if (response.status === 200) {
+          console.log(`User sign-up successfully`);
+          auth.login();
+          navigate("/home");
+        } else {
+          console.log(`User sign-up failed`);
+        }
+      } catch (error) {}
+    }
   };
 
   return (
