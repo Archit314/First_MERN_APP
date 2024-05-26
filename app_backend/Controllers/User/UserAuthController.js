@@ -3,51 +3,94 @@ const HttpError = require("../../models/http-error");
 const { validationResult } = require("express-validator");
 
 // Manul file importing
-const UserModel = require('../../models/User/UserModel')
+const UserModel = require("../../models/User/UserModel");
 
 // Below is the function to handle user sign-up
 const userSignUp = async (req, res, next) => {
   const validationError = validationResult(req);
   if (!validationError.isEmpty()) {
     console.log(validationError);
-    return next(new HttpError("Invalid inputs, please check yout data", 422)) // use with async await
+    return next(new HttpError("Invalid inputs, please check yout data", 422)); // use with async await
     throw new HttpError("Invalid inputs, please check yout data", 422); // use without async await
   }
-  const {name, mobileNumber, email, password } = req.body;
+  const { name, mobileNumber, email, password } = req.body;
 
   // Getting user exist with email or phone number
-  try{
+  try {
     const existUser = await UserModel.findOne({
-      $or: [{ mobileNumber: mobileNumber }, { email: email }]
-    })
+      $or: [{ mobileNumber: mobileNumber }, { email: email }],
+    });
 
-    if(existUser){
-      return res.status(422).json({status: 422, message: `User already exist, Sign-in with you secret credential.`, data: existUser.toObject({getters: true})}) // Setting getters to true will give new key in the API response object with name id whose value will be same as _id.
+    if (existUser) {
+      return res.status(422).json({
+        status: 422,
+        message: `User already exist, Sign-in with you secret credential.`,
+        data: existUser.toObject({ getters: true }),
+      }); // Setting getters to true will give new key in the API response object with name id whose value will be same as _id.
     }
-  }catch(error){
-    const catchedError = new HttpError(`Failed to check user in our system.`, 500)
-    return next(catchedError)
+  } catch (error) {
+    const catchedError = new HttpError(
+      `Failed to check user in our system.`,
+      500
+    );
+    return next(catchedError);
   }
-
 
   const createUser = new UserModel({
     name: name,
     mobileNumber: mobileNumber,
     email: email,
-    password: password
-  })
-  
-  try{
-    await createUser.save()
-  }catch(error){
-    const newError = new HttpError(`User sign-up failed.`, 500)
-    return next(newError)
+    password: password,
+  });
+
+  try {
+    await createUser.save();
+  } catch (error) {
+    const newError = new HttpError(`User sign-up failed.`, 500);
+    return next(newError);
   }
 
   console.log(`User sign-up API calls...........`);
-  return res
-    .status(200)
-    .json({status: 200, message: `User sign-up successfully`, data: createUser });
+  return res.status(200).json({
+    status: 200,
+    message: `User sign-up successfully`,
+    data: createUser,
+  });
+};
+
+// Method for user Sign-in API:
+const userSignIn = async (req, res, next) => {
+  const validationError = validationResult(req);
+  if (!validationError.isEmpty()) {
+    const newError = new HttpError(
+      "Invalid inputs, please check yout data",
+      422
+    );
+    return next(newError);
+  }
+
+  const { email, password } = req.body;
+
+  try {
+    const existsUser = await UserModel.findOne({
+      email: email,
+      password: password,
+    });
+
+    if (!existsUser) {
+      return res
+        .status(422)
+        .json({ status: 422, message: `Either email or password is invalid.` });
+    }
+
+    return res.status(200).json({
+      status: 200,
+      message: `Welcome ${existsUser.name}`,
+      data: existsUser,
+    });
+  } catch (error) {
+    return new HttpError(`User sing-in failed`, 500);
+  }
 };
 
 // Practice route
@@ -62,4 +105,5 @@ const homeRoute = (req, res, next) => {
 };
 
 exports.userSignUp = userSignUp;
+exports.userSignIn = userSignIn;
 exports.homeRoute = homeRoute;

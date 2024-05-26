@@ -9,8 +9,18 @@ const UserAuthController = require("../Controllers/User/UserAuthController");
 
 router.post(
   "/sign-up",
-  [check("name").not().isEmpty(), check("mobileNumber").not().isEmpty(), check("email").not().isEmpty(), check("password").not().isEmpty()],
+  [
+    check("name").not().isEmpty(),
+    check("mobileNumber").not().isEmpty(),
+    check("email").not().isEmpty(),
+    check("password").not().isEmpty(),
+  ],
   UserAuthController.userSignUp
+);
+router.post(
+  "/sign-in",
+  [check("email").not().isEmpty(), check("password").not().isEmpty()],
+  UserAuthController.userSignIn
 );
 
 router.get("/", UserAuthController.homeRoute);
