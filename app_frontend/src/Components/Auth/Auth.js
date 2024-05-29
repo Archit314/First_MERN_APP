@@ -60,7 +60,7 @@ export default function Auth() {
           SetShowToastMessage(true)
           SetErrorMessage(response.data.message)
           auth.login()
-          // navigate("/home");
+          navigate("/home");
         } else {
           console.log(`User sign-in failed`);
         }
