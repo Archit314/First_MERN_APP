@@ -22,6 +22,7 @@ router.post(
   [check("email").not().isEmpty(), check("password").not().isEmpty()],
   UserAuthController.userSignIn
 );
+router.get('/profile/:userId', UserAuthController.getUserProfile)
 
 router.get("/", UserAuthController.homeRoute);
 

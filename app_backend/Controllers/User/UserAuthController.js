@@ -93,6 +93,26 @@ const userSignIn = async (req, res, next) => {
   }
 };
 
+// Method to get user basic profile
+const getUserProfile = async (req, res, next) => {
+  const { userId } = req.params
+  console.log(userId);
+
+  if (!userId) {
+    return res.status(422).json({ status: 422, message: `Id is required in url` })
+  }
+
+  const existUser = await UserModel.findOne({ _id: userId }).select('name mobileNumber email')
+
+  if (!existUser) {
+    console.log(`User does not exist for the id: ${userId}`);
+    return res.status(422).json({ status: 422, message: `User not found` })
+  }
+
+  console.log(`User fetched successfully for id: ${userId}`);
+  return res.status(200).json({ status: 200, message: `Profile fetch successfully`, existUser })
+}
+
 // Practice route
 const homeRoute = (req, res, next) => {
   // If some error occured in any specific route then it will be thrown out to app.js file and from there app.use middle ware will handle the error:
@@ -107,3 +127,4 @@ const homeRoute = (req, res, next) => {
 exports.userSignUp = userSignUp;
 exports.userSignIn = userSignIn;
 exports.homeRoute = homeRoute;
+exports.getUserProfile = getUserProfile
