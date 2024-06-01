@@ -110,7 +110,7 @@ const getUserProfile = async (req, res, next) => {
   }
 
   console.log(`User fetched successfully for id: ${userId}`);
-  return res.status(200).json({ status: 200, message: `Profile fetch successfully`, existUser })
+  return res.status(200).json({ status: 200, message: `Profile fetch successfully`, data: existUser })
 }
 
 // Practice route

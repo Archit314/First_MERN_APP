@@ -1,8 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import "../../Components-CSS/User/UserProfileCss.css"
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 export default function UserProfile() {
+  useEffect(() => {
+    getUserProfile()
+  }, [])
+
+  const getUserProfile = async () => {
+    const config = {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      url: process.env.REACT_APP_PROD_API_BASE_URL + `/v1/api/auth/user/profile/665030db03148c32a06946d1`
+    }
+
+    try {
+      const response = await axios(config)
+      console.log(response);
+      if (response.data.status === 200) {
+        console.log(response.data.data)
+      }
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <>
       <div className="d-flex justify-content-center align-items-center min-vh-100 cardBody">
