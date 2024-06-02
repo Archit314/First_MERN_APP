@@ -23,6 +23,7 @@ router.post(
   UserAuthController.userSignIn
 );
 router.get('/profile/:userId', UserAuthController.getUserProfile)
+router.patch('/profile/update/:userId', UserAuthController.updateUserProfile)
 
 router.get("/", UserAuthController.homeRoute);
 

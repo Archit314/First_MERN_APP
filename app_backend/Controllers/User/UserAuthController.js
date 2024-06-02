@@ -113,6 +113,41 @@ const getUserProfile = async (req, res, next) => {
   return res.status(200).json({ status: 200, message: `Profile fetch successfully`, data: existUser })
 }
 
+// Method to update the user profile
+const updateUserProfile = async (req, res, next) => {
+
+  const { userId } = req.params
+  const { name, mobileNumber, email } = req.body
+  if (!userId) {
+    return res.status(422).json({ status: 422, message: `User id is required` })
+  }
+
+  if (!name && !mobileNumber && !email) {
+    return res.status(422).json({ status: 422, message: `Please update atleast one field` })
+  }
+
+  const existsUser = await UserModel.findOne({ _id: userId }).select('-password')
+
+  if (!existsUser) {
+    console.log(`User does not exist for the id: ${userId}`);
+    return res.status(422).json({ status: 422, message: `User not found` })
+  }
+
+  try {
+
+    existsUser.name = name ? name : existsUser.name
+    existsUser.email = email ? email : existsUser.email
+    existsUser.mobileNumber = mobileNumber ? mobileNumber : existsUser.mobileNumber
+    await existsUser.save();
+
+    console.log(`User profile updated successfully for user id: ${userId} and mobile number: ${existsUser.mobileNumber}`);
+    return res.status(200).json({ status: 200, message: `Profile updated successfully`, data: existsUser })
+  } catch (error) {
+    console.log(error);
+    const newError = new HttpError(`Failed to update user profile`, 500);
+    return next(newError);
+  }
+}
 // Practice route
 const homeRoute = (req, res, next) => {
   // If some error occured in any specific route then it will be thrown out to app.js file and from there app.use middle ware will handle the error:
@@ -128,3 +163,4 @@ exports.userSignUp = userSignUp;
 exports.userSignIn = userSignIn;
 exports.homeRoute = homeRoute;
 exports.getUserProfile = getUserProfile
+exports.updateUserProfile = updateUserProfile
