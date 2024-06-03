@@ -60,7 +60,7 @@ console.log(`open modal`);
         </div>
       </nav>
       {/* {showModal && <Modal modalAction={showModal}/>} */}
-      {showModal && <Modal modalAction={auth.logout} onClose={() => SetShowModal(false)} />}
+      {showModal && <Modal modalAction={auth.logout} onClose={() => SetShowModal(false)} heading="Logout your account" isAForm={false} />}
     </div>
 
   );

@@ -1,13 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import "../../Components-CSS/User/UserProfileCss.css"
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Modal from '../Modal/Modal';
+import { authContext } from '../Context/AuthContext';
 
 export default function UserProfile() {
   const [data, SetData] = useState('')
   useEffect(() => {
     getUserProfile()
   }, [])
+
+  const auth = useContext(authContext)
+
+  const [showModal, SetShowModal] = useState(false)
+
+  const handleModal = () => {
+    if (auth.isLoggedIn) {
+      console.log(`open modal`);
+      SetShowModal(true)
+    }
+  }
 
   const getUserProfile = async () => {
     const config = {
@@ -40,7 +53,7 @@ export default function UserProfile() {
             <div className="col-md-4 cardBody-left d-flex flex-column align-items-center justify-content-center">
               <h5>Your profile</h5>
               <h5> {data.name}</h5>
-              <Link type="button" className="btn btn-light">Edit</Link>
+              <Link type="button" className="btn btn-light" onClick={handleModal}>Edit</Link>
             </div>
             <div className="col-md-8 cardBody-right">
               <div className="card-body" style={{ marginTop: '3rem' }}>
@@ -93,6 +106,7 @@ export default function UserProfile() {
           </div>
         </div>
       </div>
+      {showModal && <Modal  onClose={() => SetShowModal(false)} heading="Update profile" isAForm={true}/>}
     </>
   );
 }
