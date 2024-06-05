@@ -3,6 +3,9 @@ const jwt = require('jsonwebtoken')
 
 module.exports = (req, res, next) => {
 
+    if (req.method === 'OPTIONS') {
+        return next()
+    }
 
     try {
         const authToken = req.headers.authorization // This will give token as -> Bearer token, so to extract the token we have to split the whole string from white space so that we can seperate Bearer text form token
