@@ -1,6 +1,8 @@
 // Third party importing
 const HttpError = require("../../models/http-error");
 const { validationResult } = require("express-validator");
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken');
 
 // Manul file importing
 const UserModel = require("../../models/User/UserModel");
@@ -28,34 +30,30 @@ const userSignUp = async (req, res, next) => {
         data: existUser.toObject({ getters: true }),
       }); // Setting getters to true will give new key in the API response object with name id whose value will be same as _id.
     }
-  } catch (error) {
-    const catchedError = new HttpError(
-      `Failed to check user in our system.`,
-      500
-    );
-    return next(catchedError);
-  }
 
-  const createUser = new UserModel({
-    name: name,
-    mobileNumber: mobileNumber,
-    email: email,
-    password: password,
-  });
+    let hashedPassword = await bcrypt.hash(password, 12)
 
-  try {
+    const createUser = new UserModel({
+      name: name,
+      mobileNumber: mobileNumber,
+      email: email,
+      password: hashedPassword,
+    });
+
     await createUser.save();
+
+    const token = await jwt.sign({ userId: createUser.id, email: createUser.email, mobileNumber: createUser.mobileNumber }, 'token_secret_string_for_authentication', { expiresIn: 60 * 60 })
+
+    console.log(`User sign-up API calls...........`);
+    return res.status(200).json({
+      status: 200,
+      message: `User sign-up successfully`,
+      data: createUser,
+    });
   } catch (error) {
     const newError = new HttpError(`User sign-up failed.`, 500);
     return next(newError);
   }
-
-  console.log(`User sign-up API calls...........`);
-  return res.status(200).json({
-    status: 200,
-    message: `User sign-up successfully`,
-    data: createUser,
-  });
 };
 
 // Method for user Sign-in API:
@@ -73,15 +71,23 @@ const userSignIn = async (req, res, next) => {
 
   try {
     const existsUser = await UserModel.findOne({
-      email: email,
-      password: password,
+      email: email
     });
 
     if (!existsUser) {
       return res
         .status(422)
-        .json({ status: 422, message: `Either email or password is invalid.` });
+        .json({ status: 422, message: `User not found with the provided email. Please sign-up first` });
     }
+
+    let validPassword = await bcrypt.compare(password, existsUser.password)
+
+    if (!validPassword) {
+      console.log(`User password is invalid for email: ${email}`);
+      return res.status(422).json({ status: 422, message: `Invalid password` })
+    }
+
+    const token = await jwt.sign({ userId: createUser.id, email: createUser.email, mobileNumber: createUser.mobileNumber }, 'token_secret_string_for_authentication', { expiresIn: 60 * 60 })
 
     return res.status(200).json({
       status: 200,

@@ -6,6 +6,7 @@ const { check } = require("express-validator");
 // Manual file imports
 // const HttpError = require('../models/http-error')
 const UserAuthController = require("../Controllers/User/UserAuthController");
+const UserAuthMiddleware = require('../Middleware/UserAuthMiddleware')
 
 router.post(
   "/sign-up",
@@ -22,6 +23,10 @@ router.post(
   [check("email").not().isEmpty(), check("password").not().isEmpty()],
   UserAuthController.userSignIn
 );
+
+// Middleware to protect the below routes
+router.use(UserAuthMiddleware)
+
 router.get('/profile/:userId', UserAuthController.getUserProfile)
 router.patch('/profile/update/:userId', UserAuthController.updateUserProfile)
 
