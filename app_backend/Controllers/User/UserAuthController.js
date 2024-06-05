@@ -86,13 +86,15 @@ const userSignIn = async (req, res, next) => {
       console.log(`User password is invalid for email: ${email}`);
       return res.status(422).json({ status: 422, message: `Invalid password` })
     }
-
-    const token = await jwt.sign({ userId: createUser.id, email: createUser.email, mobileNumber: createUser.mobileNumber }, 'token_secret_string_for_authentication', { expiresIn: 60 * 60 })
-
+    const token = await jwt.sign({ userId: existsUser.id, email: existsUser.email, mobileNumber: existsUser.mobileNumber }, 'token_secret_string_for_authentication', { expiresIn: 60 * 60 })
+    let response = {}
+    response.userData = existsUser
+    response.token = token
+    console.log(`User sign-in successfully for user mobile: ${existsUser.mobileNumber}`);
     return res.status(200).json({
       status: 200,
       message: `Welcome ${existsUser.name}`,
-      data: existsUser,
+      data: response,
     });
   } catch (error) {
     return new HttpError(`User sing-in failed`, 500);
