@@ -103,13 +103,8 @@ const userSignIn = async (req, res, next) => {
 
 // Method to get user basic profile
 const getUserProfile = async (req, res, next) => {
-  const { userId } = req.params
-  console.log(userId);
 
-  if (!userId) {
-    return res.status(422).json({ status: 422, message: `Id is required in url` })
-  }
-
+  const { userId } = req.userAuthInfo
   const existUser = await UserModel.findOne({ _id: userId }).select('name mobileNumber email')
 
   if (!existUser) {
@@ -124,7 +119,7 @@ const getUserProfile = async (req, res, next) => {
 // Method to update the user profile
 const updateUserProfile = async (req, res, next) => {
 
-  const { userId } = req.params
+  const { userId } = req.userAuthInfo
   const { name, mobileNumber, email } = req.body
   if (!userId) {
     return res.status(422).json({ status: 422, message: `User id is required` })

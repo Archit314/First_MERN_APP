@@ -27,8 +27,8 @@ router.post(
 // Middleware to protect the below routes
 router.use(UserAuthMiddleware)
 
-router.get('/profile/:userId', UserAuthController.getUserProfile)
-router.patch('/profile/update/:userId', UserAuthController.updateUserProfile)
+router.get('/profile', UserAuthController.getUserProfile)
+router.patch('/profile/update', UserAuthController.updateUserProfile)
 
 router.get("/", UserAuthController.homeRoute);
 
