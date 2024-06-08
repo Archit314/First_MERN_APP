@@ -10,7 +10,7 @@ export default function Navbar() {
 
   const handleModal = () => {
     if (auth.isLoggedIn) {
-console.log(`open modal`);
+      console.log(`open modal`);
       SetShowModal(true)
     }
   }
@@ -19,7 +19,7 @@ console.log(`open modal`);
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <a className="navbar-brand" href="/">
-            Navbar
+            Visualize DSA
           </a>
           <button
             className="navbar-toggler"
@@ -34,23 +34,23 @@ console.log(`open modal`);
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              {auth.isLoggedIn && <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/">
+              <li className="nav-item active">
+                <Link className="nav-link" to="/">
                   Home
                 </Link>
-              </li>}
-              <li className="nav-item">
-                <Link className="nav-link" to="/">
-                  Menu
-                </Link>
               </li>
+              {auth.isLoggedIn && <li className="nav-item">
+                <Link className="nav-link" aria-current="page" to="/">
+                  Concept
+                </Link>
+              </li>}
               {auth.isLoggedIn && <li className="nav-item">
                 <Link className="nav-link" to="/user/profile">
                   Profile
                 </Link>
               </li>}
             </ul>
-           {!auth.isLoggedIn && <Link type="button" className="btn btn-light" to={'user/auth'}>
+            {!auth.isLoggedIn && <Link type="button" className="btn btn-light" to={'user/auth'}>
               Authenticate
             </Link>}
             {auth.isLoggedIn && <Link type="button" className="btn btn-light" onClick={handleModal}>

@@ -60,7 +60,7 @@ export default function Auth() {
           SetShowToastMessage(true)
           SetErrorMessage(response.data.message)
           auth.login()
-          navigate("/home");
+          navigate("/");
         } else {
           console.log(`User sign-in failed`);
         }
@@ -104,11 +104,11 @@ export default function Auth() {
           console.log(`User sign-up failed`);
         }
       } catch (error) {
-        if(error.response.data.status !== 200){
+        if (error.response.data.status !== 200) {
           SetShowToastMessage(true)
           SetErrorMessage(error.response.data.message)
         }
-       }
+      }
     }
   };
 
@@ -202,7 +202,7 @@ export default function Auth() {
           </form>
         </div>
       </div>
-      {showToastMessage && <Toast errorMessage={errorMessage} onClose={handleClose}/>}
+      {showToastMessage && <Toast errorMessage={errorMessage} onClose={handleClose} />}
     </>
   );
 }

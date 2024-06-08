@@ -1,0 +1,21 @@
+.home-screen-button,
+.home-screen-header,
+.home-screen-sub-heading {
+    text-align: center;
+}
+
+.home-screen-sub-heading,
+.home-screen-button {
+    margin: 15% 0% 15% 0%;
+}
+
+.home-screen-card-image {
+    object-fit: cover;
+    height: 200px;
+}
+
+.home-screen-card :hover {
+    box-shadow: 8px 8px 8px grey;
+    transform: scale(1.1);
+    transition: 0.6s;
+}
