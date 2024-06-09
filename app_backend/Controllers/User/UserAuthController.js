@@ -44,11 +44,15 @@ const userSignUp = async (req, res, next) => {
 
     const token = await jwt.sign({ userId: createUser.id, email: createUser.email, mobileNumber: createUser.mobileNumber }, 'token_secret_string_for_authentication', { expiresIn: 60 * 60 })
 
+    let response = {}
+    response.userData = createUser
+    response.token = token
+
     console.log(`User sign-up API calls...........`);
     return res.status(200).json({
       status: 200,
       message: `User sign-up successfully`,
-      data: createUser,
+      data: response,
     });
   } catch (error) {
     const newError = new HttpError(`User sign-up failed.`, 500);
