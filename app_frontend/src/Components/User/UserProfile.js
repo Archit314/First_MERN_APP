@@ -50,12 +50,12 @@ export default function UserProfile() {
   return (
     <>
       <div className="container d-flex justify-content-center align-items-center vh-100">
-        <div className="row w-100 p-0 border rounded app-secondary-color auth-card" style={{ maxWidth: "800px", height: "500px" }}>
-          <div className="col-md-6 d-none d-md-flex flex-column justify-content-center align-items-center app-primary-color">
+        <div className="row w-100 p-0 border rounded app-secondary-color auth-card overflow-hidden" style={{ maxWidth: "800px", height: "auto" }}>
+          <div className="col-md-6 d-flex d-md-flex flex-column justify-content-center align-items-center app-primary-color order-md-1">
             <h5> {data.name}</h5>
             <Link type="button" className="btn btn-light" onClick={handleModal}>Edit</Link>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 order-md-2">
             <div className="card-body" style={{ marginTop: '3rem' }}>
               <div className='mb-5'>
                 <h5 className="card-title">INFORMATION</h5><hr></hr>
