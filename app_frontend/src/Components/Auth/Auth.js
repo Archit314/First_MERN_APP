@@ -117,84 +117,90 @@ export default function Auth() {
   return (
     <>
       <div className="container d-flex justify-content-center align-items-center vh-100">
-        <div className="w-100 p-4 border rounded app-secondary-color auth-card" style={{ maxWidth: "500px" }}>
-          <form onSubmit={handleSubmit}>
-            <h2 className="mb-3">{isSignup ? "Sign In" : "Sing Up"}</h2>
-            <div className="mb-3">
-              <label htmlFor="staticEmail" className="form-label">
-                Email
-              </label>
-              <input
-                type="email"
-                className="form-control"
-                id="staticEmail"
-                name="email"
-                value={data.email}
-                onChange={handleOnChange}
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="inputPassword" className="form-label">
-                Password
-              </label>
-              <input
-                type="password"
-                className="form-control"
-                id="inputPassword"
-                name="password"
-                value={data.password}
-                onChange={handleOnChange}
-              />
-            </div>
-            {!isSignup && (
+        <div className="row w-100 p-0 border rounded app-secondary-color auth-card" style={{ maxWidth: "800px", height: "500px" }}>
+          <div className="col-md-6 d-none d-md-flex justify-content-center align-items-center app-primary-color">
+            {isSignup ? <img src="https://png.pngtree.com/png-clipart/20230504/original/pngtree-free-vector-login-concept-illustration-png-image_9140539.png" alt="Description" className="img-fluid rounded" /> :
+              <img src="https://cdni.iconscout.com/illustration/premium/thumb/sign-up-8694031-6983270.png" alt="Description" className="img-fluid rounded" />}
+          </div>
+          <div className="col-md-6">
+            <form onSubmit={handleSubmit}>
+              <h2 className="mb-3">{isSignup ? "Sign In" : "Sign Up"}</h2>
               <div className="mb-3">
-                <label htmlFor="inputName" className="form-label">
-                  Name
+                <label htmlFor="staticEmail" className="form-label">
+                  Email
                 </label>
                 <input
-                  type="text"
+                  type="email"
                   className="form-control"
-                  id="inputName"
-                  name="name"
-                  value={data.name}
+                  id="staticEmail"
+                  name="email"
+                  value={data.email}
                   onChange={handleOnChange}
                 />
               </div>
-            )}
-            {!isSignup && (
               <div className="mb-3">
-                <label
-                  htmlFor="inputPhoneNumber"
-                  className="form-label"
+                <label htmlFor="inputPassword" className="form-label">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  className="form-control"
+                  id="inputPassword"
+                  name="password"
+                  value={data.password}
+                  onChange={handleOnChange}
+                />
+              </div>
+              {!isSignup && (
+                <div className="mb-3">
+                  <label htmlFor="inputName" className="form-label">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="inputName"
+                    name="name"
+                    value={data.name}
+                    onChange={handleOnChange}
+                  />
+                </div>
+              )}
+              {!isSignup && (
+                <div className="mb-3">
+                  <label
+                    htmlFor="inputPhoneNumber"
+                    className="form-label"
+                  >
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    className="form-control"
+                    id="inputPhoneNumber"
+                    name="mobileNumber"
+                    value={data.mobileNumber}
+                    onChange={handleOnChange}
+                  />
+                </div>
+              )}
+              <button type="submit" className="btn app-button">
+                {isSignup ? "Sign-in" : "Sign-up"}
+              </button>
+              <p>
+                {isSignup ? "Don't have an account?" : "Already have an account?"}{" "}
+                <Link
+                  type="button"
+                  className="btn app-button"
+                  onClick={() => {
+                    SetIsSignup(!isSignup);
+                  }}
                 >
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  className="form-control"
-                  id="inputPhoneNumber"
-                  name="mobileNumber"
-                  value={data.mobileNumber}
-                  onChange={handleOnChange}
-                />
-              </div>
-            )}
-            <button type="submit" className="btn app-button">
-              {isSignup ? "Sign-in" : "Sign-up"}
-            </button>
-            <p>
-              {isSignup ? "Don't have an account?" : "Already have an account?"}{" "}
-              <Link
-                type="button"
-                className="btn app-button"
-                onClick={() => {
-                  SetIsSignup(!isSignup);
-                }}
-              >
-                {isSignup ? "Sign-up" : "Sign-in"}
-              </Link>
-            </p>
-          </form>
+                  {isSignup ? "Sign-up" : "Sign-in"}
+                </Link>
+              </p>
+            </form>
+          </div>
         </div>
       </div >
       {showToastMessage && <Toast errorMessage={errorMessage} onClose={handleClose} />
