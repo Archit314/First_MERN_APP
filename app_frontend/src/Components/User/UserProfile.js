@@ -49,66 +49,64 @@ export default function UserProfile() {
   }
   return (
     <>
-      <div className="d-flex justify-content-center align-items-center min-vh-100 cardBody">
-        <div className="card mb-3" style={{ height: '70vh', width: '60%' }}>
-          <div className="row g-0 h-100">
-            <div className="col-md-4 cardBody-left d-flex flex-column align-items-center justify-content-center">
-              <h5>Your profile</h5>
-              <h5> {data.name}</h5>
-              <Link type="button" className="btn btn-light" onClick={handleModal}>Edit</Link>
-            </div>
-            <div className="col-md-8 cardBody-right">
-              <div className="card-body" style={{ marginTop: '3rem' }}>
-                <div className='mb-5'>
-                  <h5 className="card-title">INFORMATION</h5><hr></hr>
-                  <div className="row text-center">
+      <div className="container d-flex justify-content-center align-items-center vh-100">
+        <div className="row w-100 p-0 border rounded app-secondary-color auth-card" style={{ maxWidth: "800px", height: "500px" }}>
+          <div className="col-md-6 d-none d-md-flex flex-column justify-content-center align-items-center app-primary-color">
+            <h5> {data.name}</h5>
+            <Link type="button" className="btn btn-light" onClick={handleModal}>Edit</Link>
+          </div>
+          <div className="col-md-6">
+            <div className="card-body" style={{ marginTop: '3rem' }}>
+              <div className='mb-5'>
+                <h5 className="card-title">INFORMATION</h5><hr></hr>
+                <div className="row text-center">
+                  <div className="col">
+                    Email: {data.email}
+                  </div>
+                  <div className="col">
+                    Phone: {data.mobileNumber}
+                  </div>
+                </div>
+
+              </div>
+              <div className='mb-5'>
+                <h5 className="card-title">PROJECTS</h5><hr></hr>
+                <div className="row text-center">
+                  <div className="col">
+                    Email: {data.email}
+                  </div>
+                  <div className="col">
+                    Phone: {data.mobileNumber}
+                  </div>
+                </div>
+
+              </div>
+              <div>
+                <h5 className="card-title">LINKS</h5><hr></hr>
+                <div className="container text-center">
+                  <div className="row">
                     <div className="col">
-                      Email: {data.email}
+                      Twitter
                     </div>
                     <div className="col">
-                      Phone: {data.mobileNumber}
+                      facebook
+                    </div>
+                    <div className="col">
+                      Github
+                    </div>
+                    <div className="col">
+                      Github
                     </div>
                   </div>
-
                 </div>
-                <div className='mb-5'>
-                  <h5 className="card-title">PROJECTS</h5><hr></hr>
-                  <div className="row text-center">
-                    <div className="col">
-                      Email: {data.email}
-                    </div>
-                    <div className="col">
-                      Phone: {data.mobileNumber}
-                    </div>
-                  </div>
 
-                </div>
-                <div>
-                  <h5 className="card-title">LINKS</h5><hr></hr>
-                  <div className="container text-center">
-                    <div className="row">
-                      <div className="col">
-                        Twitter
-                      </div>
-                      <div className="col">
-                        facebook
-                      </div>
-                      <div className="col">
-                        Github
-                      </div>
-                      <div className="col">
-                        Github
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      {showModal && <Modal onClose={() => SetShowModal(false)} heading="Update profile" isAForm={true} />}
+      </div >
+      {showModal && <Modal onClose={() => SetShowModal(false)} heading="Update profile" isAForm={true} />
+      }
     </>
   );
 }
