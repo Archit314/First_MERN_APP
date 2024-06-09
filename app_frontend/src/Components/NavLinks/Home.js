@@ -30,8 +30,8 @@ export default function Home() {
             <div className="card home-screen-card">
               <img src="https://media.istockphoto.com/id/157482029/photo/stack-of-books.jpg?s=1024x1024&w=is&k=20&c=iQdICOnz_UmfAiFuY3d3LQe1B9cYHI3UwjTPNKBOlow=" className="card-img-top home-screen-card-image" alt="..." />
             </div>
-            <div className='home-screen-button'>
-              <p href="#" className="btn btn-primary" onClick={checkAuth}>View</p>
+            <div className='hs-button-div'>
+              <p href="#" className="btn home-screen-button" onClick={checkAuth}>View</p>
             </div>
           </div>
           <div className="col">
@@ -39,8 +39,8 @@ export default function Home() {
             <div className="card home-screen-card">
               <img src="https://media.istockphoto.com/id/453156437/photo/group-of-people-in-line-for-the-atm.jpg?s=1024x1024&w=is&k=20&c=k6ijcHeQGNperx1vvp4sYWTh-IlwEuwWyr_mrgsv3JA=" className="card-img-top home-screen-card-image" alt="..." />
             </div>
-            <div className='home-screen-button'>
-              <p href="#" className="btn btn-primary" onClick={checkAuth}>View</p>
+            <div className='hs-button-div'>
+              <p href="#" className="btn home-screen-button" onClick={checkAuth}>View</p>
             </div>
           </div>
           <div className="col">
@@ -48,8 +48,8 @@ export default function Home() {
             <div className="card home-screen-card">
               <img src="https://prepbytes-misc-images.s3.ap-south-1.amazonaws.com/assets/1644309661084-Linked%20list-03.png" className="card-img-top home-screen-card-image" alt="..." />
             </div>
-            <div className='home-screen-button'>
-              <p href="#" className="btn btn-primary" onClick={checkAuth}>View</p>
+            <div className='hs-button-div'>
+              <p href="#" className="btn home-screen-button" onClick={checkAuth}>View</p>
             </div>
           </div>
           <div className="col">
@@ -57,8 +57,8 @@ export default function Home() {
             <div className="card home-screen-card">
               <img src="https://media.istockphoto.com/id/1130665041/photo/question-mark-symbol.jpg?s=1024x1024&w=is&k=20&c=kd6zJihEUX2K3wqQ4cJmKt76br0jRyyniOwQJOeAsi0=" className="card-img-top home-screen-card-image" alt="..." />
             </div>
-            <div className='home-screen-button'>
-              <p href="#" className="btn btn-primary" onClick={checkAuth}>View</p>
+            <div className='hs-button-div'>
+              <p href="#" className="btn home-screen-button" onClick={checkAuth}>View</p>
             </div>
           </div>
         </div>

@@ -1,0 +1,10 @@
+.web-navbar {
+    background-color: #7F00FF;
+    border-radius: 25px;
+    margin: 8px;
+    padding: 12px;
+}
+
+.web-navbar-link {
+    color: white;
+}

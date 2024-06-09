@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { authContext } from "../Context/AuthContext";
 import { Link } from "react-router-dom";
 import Modal from "../Modal/Modal";
+import "./NavbarCss.css"
 
 export default function Navbar() {
   const auth = useContext(authContext)
@@ -16,10 +17,10 @@ export default function Navbar() {
   }
   return (
     <div>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar navbar-expand-lg web-navbar">
         <div className="container-fluid">
-          <a className="navbar-brand" href="/">
-            Visualize DSA
+          <a className="navbar-brand web-navbar-link" href="/">
+            Smart DSA
           </a>
           <button
             className="navbar-toggler"
@@ -35,17 +36,17 @@ export default function Navbar() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item active">
-                <Link className="nav-link" to="/">
+                <Link className="nav-link web-navbar-link" to="/">
                   Home
                 </Link>
               </li>
               {auth.isLoggedIn && <li className="nav-item">
-                <Link className="nav-link" aria-current="page" to="/">
+                <Link className="nav-link web-navbar-link" aria-current="page" to="/">
                   Concept
                 </Link>
               </li>}
               {auth.isLoggedIn && <li className="nav-item">
-                <Link className="nav-link" to="/user/profile">
+                <Link className="nav-link web-navbar-link" to="/user/profile">
                   Profile
                 </Link>
               </li>}
