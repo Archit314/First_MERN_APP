@@ -61,7 +61,7 @@ export default function Auth() {
           console.log(`User sign-in successfully`);
           SetShowToastMessage(true)
           SetErrorMessage(response.data.message)
-          auth.login()
+          auth.login(response.data.data.token)
           navigate("/");
         } else {
           console.log(`User sign-in failed`);

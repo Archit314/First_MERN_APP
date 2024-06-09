@@ -23,12 +23,14 @@ export default function UserProfile() {
   }
 
   const getUserProfile = async () => {
+    const userToken = localStorage.getItem("access_token")
     const config = {
       method: 'GET',
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${userToken}`
       },
-      url: process.env.REACT_APP_PROD_API_BASE_URL + `/v1/api/auth/user/profile/665030db03148c32a06946d1`
+      url: process.env.REACT_APP_PROD_API_BASE_URL + `/v1/api/auth/user/profile`
     }
 
     try {
@@ -106,7 +108,7 @@ export default function UserProfile() {
           </div>
         </div>
       </div>
-      {showModal && <Modal  onClose={() => SetShowModal(false)} heading="Update profile" isAForm={true}/>}
+      {showModal && <Modal onClose={() => SetShowModal(false)} heading="Update profile" isAForm={true} />}
     </>
   );
 }

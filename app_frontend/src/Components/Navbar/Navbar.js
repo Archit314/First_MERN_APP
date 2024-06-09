@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { authContext } from "../Context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Modal from "../Modal/Modal";
 import "./NavbarCss.css"
 
@@ -8,12 +8,17 @@ export default function Navbar() {
   const auth = useContext(authContext)
 
   const [showModal, SetShowModal] = useState(false)
+  const navigate = useNavigate()
 
   const handleModal = () => {
     if (auth.isLoggedIn) {
       console.log(`open modal`);
       SetShowModal(true)
     }
+  }
+  const handleLogout = () => {
+    auth.logout()
+    navigate('/')
   }
   return (
     <div>
@@ -61,7 +66,7 @@ export default function Navbar() {
         </div>
       </nav>
       {/* {showModal && <Modal modalAction={showModal}/>} */}
-      {showModal && <Modal modalAction={auth.logout} onClose={() => SetShowModal(false)} heading="Logout your account" isAForm={false} />}
+      {showModal && <Modal modalAction={handleLogout} onClose={() => SetShowModal(false)} heading="Logout your account" isAForm={false} />}
     </div>
 
   );
