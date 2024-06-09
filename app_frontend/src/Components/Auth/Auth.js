@@ -100,8 +100,9 @@ export default function Auth() {
           console.log(`User sign-up successfully`);
           SetShowToastMessage(true)
           SetErrorMessage(response.data.message)
-          auth.login();
-          navigate("/home");
+          console.log(response.data.data.token);
+          auth.login(response.data.data.token);
+          navigate("/");
         } else {
           console.log(`User sign-up failed`);
         }
