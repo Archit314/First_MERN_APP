@@ -32,7 +32,25 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+.app-button {
+  background-color: #7F00FF;
+  color: white;
+}
+
+.app-primary-color {
+  background-color: #7F00FF;
+}
+
+.app-secondary-color {
+  background-color: white;
+}
+
+.app-tertiary-color {
+  background-color: #d4d4d4;
 }

@@ -3,6 +3,8 @@ import { authContext } from "../Context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Toast from "../Toast/Toast";
+import "../../App.css"
+import "./Auth.css"
 
 export default function Auth() {
   const auth = useContext(authContext);
@@ -11,10 +13,10 @@ export default function Auth() {
 
   const [isSignup, SetIsSignup] = useState(false);
   const formData = {
-    email: "Enter your email",
-    password: "Enter your password",
-    name: "Enter your name",
-    mobileNumber: "Enter your phone number",
+    email: "",
+    password: "",
+    name: "",
+    mobileNumber: "",
   };
 
   const [data, SetData] = useState(formData);
@@ -115,83 +117,76 @@ export default function Auth() {
   return (
     <>
       <div className="container d-flex justify-content-center align-items-center vh-100">
-        <div className="w-50 p-4 border rounded">
+        <div className="w-100 p-4 border rounded app-secondary-color auth-card" style={{ maxWidth: "500px" }}>
           <form onSubmit={handleSubmit}>
-            <div className="mb-3 row">
-              <label htmlFor="staticEmail" className="col-sm-2 col-form-label">
+            <h2 className="mb-3">{isSignup ? "Sign In" : "Sing Up"}</h2>
+            <div className="mb-3">
+              <label htmlFor="staticEmail" className="form-label">
                 Email
               </label>
-              <div className="col-sm-10">
+              <input
+                type="email"
+                className="form-control"
+                id="staticEmail"
+                name="email"
+                value={data.email}
+                onChange={handleOnChange}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="inputPassword" className="form-label">
+                Password
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="inputPassword"
+                name="password"
+                value={data.password}
+                onChange={handleOnChange}
+              />
+            </div>
+            {!isSignup && (
+              <div className="mb-3">
+                <label htmlFor="inputName" className="form-label">
+                  Name
+                </label>
                 <input
                   type="text"
                   className="form-control"
-                  id="staticEmail"
-                  name="email"
-                  value={data.email}
+                  id="inputName"
+                  name="name"
+                  value={data.name}
                   onChange={handleOnChange}
                 />
-              </div>
-            </div>
-            <div className="mb-3 row">
-              <label htmlFor="inputPassword" className="col-sm-2 col-form-label">
-                Password
-              </label>
-              <div className="col-sm-10">
-                <input
-                  type="password"
-                  className="form-control"
-                  id="inputPassword"
-                  name="password"
-                  value={data.password}
-                  onChange={handleOnChange}
-                />
-              </div>
-            </div>
-            {!isSignup && (
-              <div className="mb-3 row">
-                <label htmlFor="inputName" className="col-sm-2 col-form-label">
-                  Name
-                </label>
-                <div className="col-sm-10">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="inputName"
-                    name="name"
-                    value={data.name}
-                    onChange={handleOnChange}
-                  />
-                </div>
               </div>
             )}
             {!isSignup && (
-              <div className="mb-3 row">
+              <div className="mb-3">
                 <label
                   htmlFor="inputPhoneNumber"
-                  className="col-sm-2 col-form-label"
+                  className="form-label"
                 >
                   Phone Number
                 </label>
-                <div className="col-sm-10">
-                  <input
-                    type="tel"
-                    className="form-control"
-                    id="inputPhoneNumber"
-                    name="mobileNumber"
-                    value={data.mobileNumber}
-                    onChange={handleOnChange}
-                  />
-                </div>
+                <input
+                  type="tel"
+                  className="form-control"
+                  id="inputPhoneNumber"
+                  name="mobileNumber"
+                  value={data.mobileNumber}
+                  onChange={handleOnChange}
+                />
               </div>
             )}
-            <button type="submit" className="btn btn-light">
+            <button type="submit" className="btn app-button">
               {isSignup ? "Sign-in" : "Sign-up"}
             </button>
             <p>
               {isSignup ? "Don't have an account?" : "Already have an account?"}{" "}
               <Link
                 type="button"
-                className="btn btn-light"
+                className="btn app-button"
                 onClick={() => {
                   SetIsSignup(!isSignup);
                 }}
@@ -201,8 +196,9 @@ export default function Auth() {
             </p>
           </form>
         </div>
-      </div>
-      {showToastMessage && <Toast errorMessage={errorMessage} onClose={handleClose} />}
+      </div >
+      {showToastMessage && <Toast errorMessage={errorMessage} onClose={handleClose} />
+      }
     </>
   );
 }
