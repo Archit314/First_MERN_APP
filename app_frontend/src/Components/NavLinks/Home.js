@@ -22,7 +22,7 @@ export default function Home() {
     <div>
       <div className="container">
         <div className="row home-screen-header mt-5 mb-4">
-          <h1>Our Concepts</h1>
+          <h1>OUR CONCEPTS</h1>
         </div>
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-4">
           <div className="col">
