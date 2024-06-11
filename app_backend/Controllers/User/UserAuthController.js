@@ -47,6 +47,7 @@ const userSignUp = async (req, res, next) => {
     let response = {}
     response.userData = createUser
     response.token = token
+    response.sessionTime = UserAuthConfig.session_time
 
     console.log(`User sign-up API calls...........`);
     return res.status(200).json({
