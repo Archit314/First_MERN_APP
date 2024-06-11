@@ -11,16 +11,16 @@ const UserAuthMiddleware = require('../Middleware/UserAuthMiddleware')
 router.post(
   "/sign-up",
   [
-    check("name").not().isEmpty(),
-    check("mobileNumber").not().isEmpty(),
-    check("email").not().isEmpty(),
-    check("password").not().isEmpty(),
+    check("name").not().isEmpty().withMessage('Please enter name'),
+    check("mobileNumber").not().isEmpty().withMessage('Please enter mobile number'),
+    check("email").not().isEmpty().withMessage('Please enter email'),
+    check("password").not().isEmpty().withMessage('Please enter password'),
   ],
   UserAuthController.userSignUp
 );
 router.post(
   "/sign-in",
-  [check("email").not().isEmpty(), check("password").not().isEmpty()],
+  [check("email").not().isEmpty().withMessage('Please enter email'), check("password").not().isEmpty().withMessage('Please enter password')],
   UserAuthController.userSignIn
 );
 

@@ -11,9 +11,7 @@ const UserModel = require("../../models/User/UserModel");
 const userSignUp = async (req, res, next) => {
   const validationError = validationResult(req);
   if (!validationError.isEmpty()) {
-    console.log(validationError);
-    return next(new HttpError("Invalid inputs, please check yout data", 422)); // use with async await
-    throw new HttpError("Invalid inputs, please check yout data", 422); // use without async await
+    return res.status(422).json({status: 422, data: validationError})
   }
   const { name, mobileNumber, email, password } = req.body;
 
@@ -42,6 +40,7 @@ const userSignUp = async (req, res, next) => {
 
     await createUser.save();
 
+    // Creating JWT token
     const token = await jwt.sign({ userId: createUser.id, email: createUser.email, mobileNumber: createUser.mobileNumber }, 'token_secret_string_for_authentication', { expiresIn: 60 * 60 })
 
     let response = {}
@@ -63,12 +62,9 @@ const userSignUp = async (req, res, next) => {
 // Method for user Sign-in API:
 const userSignIn = async (req, res, next) => {
   const validationError = validationResult(req);
+  console.log(validationError);
   if (!validationError.isEmpty()) {
-    const newError = new HttpError(
-      "Invalid inputs, please check yout data",
-      422
-    );
-    return next(newError);
+    return res.status(422).json({status: 422, data: validationError})
   }
 
   const { email, password } = req.body;
