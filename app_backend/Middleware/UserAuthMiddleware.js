@@ -1,5 +1,9 @@
-const HttpError = require('../models/http-error')
+// Importing third party Files
 const jwt = require('jsonwebtoken')
+
+// Importing Manual file
+const HttpError = require('../models/http-error')
+const UserAuthConfig = require('../Config/UserAuthConfig')
 
 module.exports = (req, res, next) => {
 
@@ -17,7 +21,7 @@ module.exports = (req, res, next) => {
             return res.status(401).json({ status: 401, message: `Authentication failed` })
         }
 
-        const decodedToken = jwt.verify(userAuthToken, 'token_secret_string_for_authentication')
+        const decodedToken = jwt.verify(userAuthToken, UserAuthConfig.secret_key)
         req.userAuthInfo = {
             userId: decodedToken.userId,
             email: decodedToken.email,

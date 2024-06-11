@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 
 // Manul file importing
 const UserModel = require("../../models/User/UserModel");
+const UserAuthConfig = require('../../Config/UserAuthConfig')
 
 // Below is the function to handle user sign-up
 const userSignUp = async (req, res, next) => {
@@ -41,7 +42,7 @@ const userSignUp = async (req, res, next) => {
     await createUser.save();
 
     // Creating JWT token
-    const token = await jwt.sign({ userId: createUser.id, email: createUser.email, mobileNumber: createUser.mobileNumber }, 'token_secret_string_for_authentication', { expiresIn: 60 * 60 })
+    const token = await jwt.sign({ userId: createUser.id, email: createUser.email, mobileNumber: createUser.mobileNumber }, UserAuthConfig.secret_key, { expiresIn: UserAuthConfig.session_time })
 
     let response = {}
     response.userData = createUser
@@ -62,7 +63,6 @@ const userSignUp = async (req, res, next) => {
 // Method for user Sign-in API:
 const userSignIn = async (req, res, next) => {
   const validationError = validationResult(req);
-  console.log(validationError);
   if (!validationError.isEmpty()) {
     return res.status(422).json({status: 422, data: validationError})
   }
@@ -86,10 +86,11 @@ const userSignIn = async (req, res, next) => {
       console.log(`User password is invalid for email: ${email}`);
       return res.status(422).json({ status: 422, message: `Invalid password` })
     }
-    const token = await jwt.sign({ userId: existsUser.id, email: existsUser.email, mobileNumber: existsUser.mobileNumber }, 'token_secret_string_for_authentication', { expiresIn: 60 * 60 })
+    const token = await jwt.sign({ userId: existsUser.id, email: existsUser.email, mobileNumber: existsUser.mobileNumber }, UserAuthConfig.secret_key, { expiresIn: UserAuthConfig.session_time })
     let response = {}
     response.userData = existsUser
     response.token = token
+    response.sessionTime = UserAuthConfig.session_time
     console.log(`User sign-in successfully for user mobile: ${existsUser.mobileNumber}`);
     return res.status(200).json({
       status: 200,
