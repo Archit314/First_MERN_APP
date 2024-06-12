@@ -5,6 +5,7 @@ import axios from "axios";
 import Toast from "../Toast/Toast";
 import "../../App.css"
 import "./Auth.css"
+import Loader from "../Shared/Loader";
 
 export default function Auth() {
   const auth = useContext(authContext);
@@ -30,6 +31,7 @@ export default function Auth() {
 
   const [showToastMessage, SetShowToastMessage] = useState(false)
   const [errorMessage, SetErrorMessage] = useState('')
+  const [showLoader, SetShowLoader] = useState(false)
 
   const handleClose = () => {
     SetShowToastMessage(false)
@@ -37,6 +39,7 @@ export default function Auth() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    SetShowLoader(true)
 
     if (isSignup) {
       const postData = {
@@ -113,6 +116,8 @@ export default function Auth() {
         }
       }
     }
+
+    SetShowLoader(false)
   };
 
   return (
@@ -206,6 +211,7 @@ export default function Auth() {
       </div >
       {showToastMessage && <Toast errorMessage={errorMessage} onClose={handleClose} />
       }
+      {showLoader && <Loader />}
     </>
   );
 }

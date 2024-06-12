@@ -1,4 +1,5 @@
 import React from 'react'
+import '../../App.css'
 
 export default function Modal({ modalAction, onClose, heading, isAForm }) {
     const handleModalActions = () => {
@@ -35,13 +36,12 @@ export default function Modal({ modalAction, onClose, heading, isAForm }) {
                                     <label for="exampleInputMobile" className="form-label">Mobile Number</label>
                                     <input type="tel" className="form-control" id="exampleInputMobile" aria-describedby="mobileHelp" />
                                 </div>
-                                <button type="submit" className="btn btn-primary">update</button>
                             </form>
                         </div>
                         }
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={onClose}>Cancel</button>
-                            <button type="button" className="btn btn-primary" onClick={handleModalActions}>Logout</button>
+                            <button type="button" className="btn app-tertiary-color" data-bs-dismiss="modal" onClick={onClose}>Cancel</button>
+                            <button type="button" className="btn btn-primary app-primary-color" onClick={handleModalActions}>{isAForm? 'Update': 'Logout'}</button>
                         </div>
                     </div>
                 </div>
