@@ -47,6 +47,49 @@ export default function UserProfile() {
       console.log(error);
     }
   }
+
+  const initialData = {
+    email: "",
+    name: "",
+    mobileNumber: ""
+  }
+  const [formData, SetFormData] = useState(initialData)
+  const handleFormChange = (event) => {
+    const {name, value} = event.target
+    SetFormData({...formData, [name]: value});
+  }
+
+  const handleUpdate = async (event) => {
+    event.preventDefault();
+    const postData = {
+      name: formData.name? formData.name: "",
+      mobileNumber: formData.mobileNumber? formData.mobileNumber: "",
+      email: formData.email? formData.email: ""
+    }
+
+    const userToken = localStorage.getItem("access_token")
+    const config = {
+      method: 'PATCH',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${userToken}`
+      },
+      url:
+          process.env.REACT_APP_PROD_API_BASE_URL + `/v1/api/auth/user/profile/update`,
+      data: postData
+    }
+
+    try {
+      const response = await axios(config)
+
+      if(response.data.status === 200){
+        console.log(`Profile updated successfully`)
+        SetFormData(initialData)
+      }
+    } catch (error) {
+      
+    }
+  }
   return (
     <>
       <div className="container d-flex justify-content-center align-items-center vh-100">
@@ -105,7 +148,7 @@ export default function UserProfile() {
           </div>
         </div>
       </div >
-      {showModal && <Modal onClose={() => SetShowModal(false)} heading="Update profile" isAForm={true} />
+      {showModal && <Modal formData={formData} handleFormChange={handleFormChange} modalAction={handleUpdate} onClose={() => SetShowModal(false)} heading="Update profile" isAForm={true} />
       }
     </>
   );
