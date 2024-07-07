@@ -4,6 +4,14 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Modal from '../Modal/Modal';
 import { authContext } from '../Context/AuthContext';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
+import EditIcon from '@mui/icons-material/Edit';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export default function UserProfile() {
   const [data, SetData] = useState('')
@@ -95,8 +103,9 @@ export default function UserProfile() {
       <div className="container d-flex justify-content-center align-items-center vh-100">
         <div className="row w-100 p-0 border rounded app-secondary-color auth-card overflow-hidden" style={{ maxWidth: "800px", height: "auto" }}>
           <div className="col-md-6 d-flex d-md-flex flex-column justify-content-center align-items-center app-primary-color order-md-1">
-            <h5> {data.name}</h5>
-            <Link type="button" className="btn btn-light" onClick={handleModal}>Edit</Link>
+            <AccountCircleIcon sx={{ color: 'white', fontSize: 200}}/>
+            <h5 style={{ color: 'white'}}> {data.name}</h5>
+            <Link type="button" className="btn btn-light" onClick={handleModal}><EditIcon/></Link>
           </div>
           <div className="col-md-6 order-md-2">
             <div className="card-body" style={{ marginTop: '3rem' }}>
@@ -104,10 +113,10 @@ export default function UserProfile() {
                 <h5 className="card-title">INFORMATION</h5><hr></hr>
                 <div className="row text-center">
                   <div className="col">
-                    Email: {data.email}
+                    <EmailIcon/> {data.email}
                   </div>
                   <div className="col">
-                    Phone: {data.mobileNumber}
+                    <PhoneIcon/> {data.mobileNumber}
                   </div>
                 </div>
 
@@ -116,29 +125,29 @@ export default function UserProfile() {
                 <h5 className="card-title">PROJECTS</h5><hr></hr>
                 <div className="row text-center">
                   <div className="col">
-                    Email: {data.email}
+                    <EmailIcon/> {data.email}
                   </div>
                   <div className="col">
-                    Phone: {data.mobileNumber}
+                    <PhoneIcon/> {data.mobileNumber}
                   </div>
                 </div>
 
               </div>
-              <div>
+              <div style={{ marginBottom: 15}}>
                 <h5 className="card-title">LINKS</h5><hr></hr>
                 <div className="container text-center">
                   <div className="row">
                     <div className="col">
-                      Twitter
+                      <TwitterIcon/>
                     </div>
                     <div className="col">
-                      facebook
+                      <FacebookIcon/>
                     </div>
                     <div className="col">
-                      Github
+                      <LinkedInIcon/>
                     </div>
                     <div className="col">
-                      Github
+                      <GitHubIcon/>
                     </div>
                   </div>
                 </div>
