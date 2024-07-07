@@ -8,11 +8,17 @@ import Auth from "./Components/Auth/Auth";
 import Home from "./Components/NavLinks/Home";
 import UserProfile from "./Components/User/UserProfile";
 import ItemDescription from "./Components/NavLinks/ItemDescription";
+import {jwtDecode} from "jwt-decode"
 
 function App() {
   const [isLoggedIn, SetIsLoggedIn] = useState(false);
 
   const login = (token) => {
+
+    const decodedToken = jwtDecode(token)
+    let expirationTime = (decodedToken.exp * 1000);
+
+    localStorage.setItem('session_expiration_time', expirationTime)
     localStorage.setItem('access_token', token)
     SetIsLoggedIn(true);
   };
@@ -22,14 +28,33 @@ function App() {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('access_token');
+    const checkTokenExpiration = () => {
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        const currentTime = Date.now();
+        const expirationTime = localStorage.getItem('session_expiration_time');
+        
+        if (currentTime > expirationTime) {
+          logout();
+        } else {
+          SetIsLoggedIn(true);
+        }
+      } else {
+        SetIsLoggedIn(false);
+      }
+    };
 
-    if (token) {
-      SetIsLoggedIn(true);
-    } else {
-      SetIsLoggedIn(false);
-    }
-  }, [])
+    // Check token expiration on component mount
+    checkTokenExpiration();
+
+    // Set up interval to check token expiration periodically
+    const interval = setInterval(() => {
+      checkTokenExpiration();
+    }, 1000 * 60 * 30); // Check every minute
+
+    // Clean up interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
   return (
     <>
       <authContext.Provider

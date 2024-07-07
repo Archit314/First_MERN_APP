@@ -18,6 +18,7 @@ module.exports = (req, res, next) => {
         // Here, [1] is used to access token because at [0] we will get bearer string.
 
         if (!userAuthToken) {
+            console.log(`Auth token not found in the request`);
             return res.status(401).json({ status: 401, message: `Authentication failed` })
         }
 
@@ -30,6 +31,7 @@ module.exports = (req, res, next) => {
         next()
 
     } catch (error) {
+        console.log(`Authentication failed`);
         const newError = new HttpError('Authentication failed!', 401)
         return next(newError)
     }
